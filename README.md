@@ -3,7 +3,7 @@ Open-Source code for ACL 2023 paper:
 *[WeCheck: Strong Factual Consistency Checker via Weakly Supervised Learning
 ](https://arxiv.org/abs/2212.10057)*
 
-## Model description
+## Model Description
 WeCheck is a factual consistency metric trained from weakly annotated samples.
 This open-sourced WeCheck can be used to check the following three generation tasks:
 
@@ -64,4 +64,39 @@ for i in range(0,len(premise),batch_size):
     result_scores += prediction
 print(result_scores)
 ```
-## Reporduction
+## Reporduction&Source Code
+### Major Requirement:
+#### Environment:
+```text
+pytorch #recommand: 1.10.0
+
+transformers # A version that supports AutoModelForSequenceClassification and AutoTokenizer
+
+*[snorkel](https://github.com/snorkel-team/snorkel)* #The pakage for our Labeling function, quick install via 'pip install snorkel
+' or 'conda install snorkel -c conda-forge' 
+```
+### Step 1: Boostrap and Weak  Annotation:
+In order to train our metric, we need to first obtain enough data from the target task and annotate them with different weak supervision labelers.
+
+If we have n tasks and m weak supervision labelers, we first boostrap these n task  seperately by taking the  beam search samples,them we save each sample in json format:
+```python
+{"article":"",  "beams":[beam_1, beam2, ... beam_m]}
+```
+where "beams" is a list contains all the results from beam seach.
+
+And we annotate the factual consistency of every beam  using  m weak supervision labelers and save all the score in the input by:
+```python
+{"article":"",  "beams":[beam_1, beam2, ... beam_m], "metric_j_score": [..., beam_i_score, ...]}
+```
+If this step is too sophisticated for you, you can directly use our preprocessed data from (). 
+
+### Step 1.1: Boostrapping Task Data:
+
+
+### Step 1.2: Weak  Annotation:
+
+Annotate all the samples boostrapped from generation models and annotate their factulity using the following three weak labeler:
+
+*[QAFactEval
+](https://github.com/salesforce/QAFactEval)* / *[Summarc](https://github.com/tingofurro/summac)* / *[NLI warmup](https://huggingface.co/MoritzLaurer/DeBERTa-v3-large-mnli-fever-anli-ling-wanli)* 
+
