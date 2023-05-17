@@ -108,7 +108,7 @@ Net and dodecaDialogue trained on Wow dataset.
 
 You can get this data by parlai command and preprocess them into the unified format mentioned above.
 
-**Paraphrase**
+**Paraphrase:**
 
 As this task is relatively easy, we directly apply samples from QQP.
 
