@@ -118,4 +118,27 @@ Annotate all the samples boostrapped from generation models and annotate their f
 
 *[QAFactEval
 ](https://github.com/salesforce/QAFactEval)* / *[Summarc](https://github.com/tingofurro/summac)* / *[NLI warmup](https://huggingface.co/MoritzLaurer/DeBERTa-v3-large-mnli-fever-anli-ling-wanli)* 
+We use a unified function 'scoring.py' to annotate different labeler.
+
+**NLI_warmup Annotation:** 
+We first annotate $tgt_dir with *NLI_warmup and ouput samples in $nliwarup_dir:
+```python
+python scoring.py --gpuid 0 1 2 3 --src_dir $tgt_dir --tgt_dir $nliwarup_dir --scorer anli
+```
+
+**Summac Annotation:** 
+Put *[Summarc](https://github.com/tingofurro/summac)* in the path and annotate $nliwarup_dir and ouput samples in $summac_dir:
+```python
+python scoring.py --gpuid 0 1 2 3 --src_dir $nliwarup_dir --tgt_dir $summac_dir --scorer summac
+```
+
+**QAFactEval Annotation:** 
+Put *[QAFactEval](https://github.com/salesforce/QAFactEval)*  in the path and annotate $summac_dir and ouput samples in $qafacteval_score (you may need to independetly the environment of QAFactEval which may be confict with Summac and NLI):
+```python
+python scoring.py --gpuid 0 1 2 3 --src_dir $summac_dir --tgt_dir $qafacteval_score --scorer qafacteval
+```
+### Step 2: Training WeCheck:
+After the most complex preprocessing step, we easily train WeCheck by: 
+```python
+python main.py --cuda --gpuid 0 1 2 3 --src_dir $qafacteval_score
 
