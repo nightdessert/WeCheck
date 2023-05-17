@@ -101,6 +101,15 @@ python sum_candidate.py --gpuid 0 1 2 3 --src_dir $src_dir --tgt_dir $tgt_dir --
 ```
 Then output summries will save in $tgt_dir.
 
+**Dialog:**
+For dialog, we use *[parlai](https://parl.ai/)* for boosttrap, we use Mem-
+Net and dodecaDialogue trained on Wow dataset.
+
+You can get this data by parlai command and preprocess them into the unified format mentioned above.
+
+**Paraphrase**
+As this task is relatively easy, we directly apply samples from QQP.
+
 ### Step 1.2: Weak  Annotation:
 
 Annotate all the samples boostrapped from generation models and annotate their factulity using the following three weak labeler:
