@@ -78,7 +78,7 @@ transformers # A version that supports AutoModelForSequenceClassification and Au
 ### Step 1: Boostrap and Weak  Annotation:
 In order to train our metric, we need to first obtain enough data from the target task and annotate them with different weak supervision labelers.
 
-If we have n tasks and m weak supervision labelers, we first boostrap these n task  seperately by taking the  beam search samples,them we save each sample in json format:
+If we have n tasks and m weak supervision labelers, we first boostrap these n task  seperately by taking the  beam search samples,then we save each sample in json format:
 ```python
 {"article":"",  "beams":[beam_1, beam2, ... beam_m]}
 ```
@@ -91,7 +91,15 @@ And we annotate the factual consistency of every beam  using  m weak supervision
 If this step is too sophisticated for you, you can directly use our preprocessed data from (). 
 
 ### Step 1.1: Boostrapping Task Data:
+**Summarization:**
 
+Given CNN/DM or XSUM train set locate at $src_dir, where input articles and references are in file x.source, x.reference.
+
+We boostrap from bart using diverse beam search by:
+```python
+python sum_candidate.py --gpuid 0 1 2 3 --src_dir $src_dir --tgt_dir $tgt_dir --dataset 'cnn/dm' or 'xsum'
+```
+Then output summries will save in $tgt_dir.
 
 ### Step 1.2: Weak  Annotation:
 
