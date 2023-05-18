@@ -138,7 +138,7 @@ Put *[QAFactEval](https://github.com/salesforce/QAFactEval)*  in the path and an
 python scoring.py --gpuid 0 1 2 3 --src_dir ./wecheck_data/task_name/ --tgt_dir ./wecheck_data/task_name/ --scorer qafacteval
 ```
 ### Step 2: Training WeCheck:
-After the most complex preprocessing step, we easily train WeCheck by: 
+After the most complex preprocessing step, we easily train WeCheck by (for better performance, make sure batch_size*accumulate_step >= 32): 
 ```python
 python main.py --cuda --gpuid 0 1 2 3 --src_dir ./wecheck_data
 
