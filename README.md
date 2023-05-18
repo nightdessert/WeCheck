@@ -88,7 +88,7 @@ And we annotate the factual consistency of every beam  using  m weak supervision
 ```python
 {"article":"",  "beams":[beam_1, beam2, ... beam_m], "metric_j_score": [..., beam_i_score, ...]}
 ```
-If this step is too sophisticated for you, you can directly use our preprocessed data from (). 
+**If this step is too sophisticated for you, you can directly use our preprocessed data from ./wecheck_data**. 
 
 ### Step 1.1: Boostrapping Task Data:
 **Summarization:**
@@ -110,7 +110,7 @@ You can get this data by parlai command and preprocess them into the unified for
 
 **Paraphrase:**
 
-As this task is relatively easy, we directly apply samples from QQP.
+As this task is relatively easy, we directly apply samples from PAWS.
 
 ### Step 1.2: Weak  Annotation:
 
@@ -123,22 +123,22 @@ We use a unified function 'scoring.py' to annotate different labeler.
 **NLI_warmup Annotation:** 
 We first annotate $tgt_dir with *NLI_warmup and ouput samples in $nliwarup_dir:
 ```python
-python scoring.py --gpuid 0 1 2 3 --src_dir $tgt_dir --tgt_dir $nliwarup_dir --scorer anli
+python scoring.py --gpuid 0 1 2 3 --src_dir $tgt_dir --tgt_dir ./wecheck_data/task_name/ --scorer anli
 ```
 
 **Summac Annotation:** 
 Put *[Summarc](https://github.com/tingofurro/summac)* in the path and annotate $nliwarup_dir and ouput samples in $summac_dir:
 ```python
-python scoring.py --gpuid 0 1 2 3 --src_dir $nliwarup_dir --tgt_dir $summac_dir --scorer summac
+python scoring.py --gpuid 0 1 2 3 --src_dir ./wecheck_data/task_name/ --tgt_dir ./wecheck_data/task_name/ --scorer summac
 ```
 
 **QAFactEval Annotation:** 
 Put *[QAFactEval](https://github.com/salesforce/QAFactEval)*  in the path and annotate $summac_dir and ouput samples in $qafacteval_score (you may need to independetly the environment of QAFactEval which may be confict with Summac and NLI):
 ```python
-python scoring.py --gpuid 0 1 2 3 --src_dir $summac_dir --tgt_dir $qafacteval_score --scorer qafacteval
+python scoring.py --gpuid 0 1 2 3 --src_dir ./wecheck_data/task_name/ --tgt_dir ./wecheck_data/task_name/ --scorer qafacteval
 ```
 ### Step 2: Training WeCheck:
 After the most complex preprocessing step, we easily train WeCheck by: 
 ```python
-python main.py --cuda --gpuid 0 1 2 3 --src_dir $qafacteval_score
+python main.py --cuda --gpuid 0 1 2 3 --src_dir ./wecheck_data
 
