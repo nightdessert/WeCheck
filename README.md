@@ -88,7 +88,7 @@ And we annotate the factual consistency of every beam  using  m weak supervision
 ```python
 {"article":"",  "beams":[beam_1, beam2, ... beam_m], "metric_j_score": [..., beam_i_score, ...]}
 ```
-**If this step is too sophisticated for you, you can directly use our preprocessed data from ./wecheck_data**. 
+**If this step is too sophisticated for you, you can directly use our preprocessed data in ./wecheck_data**. 
 
 ### Step 1.1: Boostrapping Task Data:
 **Summarization:**
